@@ -1,45 +1,57 @@
 #!/usr/bin/env node
 
-/*
- * This is a command line interface to the fielwatch library.
- *
- * Usage:
- * fwatch PATTERN COMMAND
- */
+//
+// This is a command line interface to the fielwatch library.
+//
+// Usage:
+// fwatch Target [Options]
+//
+// Example:
+// fwatch 'src/*.scss' -c 'node-sass src/main.scss dist/main.css'
+//
+// The example above watches for file changes of some Sass fiels inside the src
+// directory. Everytime a file changes, `node-sass` is executed to recompile the
+// Sass files.
+//
 
 var argv = require('argv');
 var watch = require('../lib/filewatch');
 var spawn = require('child_process').spawn;
+var colors = require('colors');
 
-var usageInfo = 'Usage: fwatch Pattern Command\n\n' +
-    '\tPattern: A file, directory or glob.\n' +
-    '\tCommand: The command to be executed on file change events.';
+var usageInfo = 'Usage: fwatch Target [Options]\n\n' +
+    '\tTarget: A file, directory or glob.';
 
 argv.info(usageInfo);
 
+argv.option({
+    name: 'command',
+    short: 'c',
+    type: 'string',
+    description: 'Command to be executed on file change (required).',
+    example: 'rwatch some/dir -c \'ls -l\''
+});
+
 var args = argv.run();
 
-if (args.targets.length < 2) {
-    var errMsg = 'Not enough arguments. Expecting 2, but to ' +
+if (args.targets.length < 1) {
+    var errMsg = 'Not enough arguments. Expecting 1, but to ' +
         args.targets.length + '. See "fwatch -h".';
     console.log(errMsg);
     process.exit(1);
 }
 
 var filesToWatch = args.targets[0];
-var commandString = args.targets[1];
+var commandString = args.options.command;
 
-var commandElements = commandString.split(' ');
-var command = commandElements[0];
-var commandArgs = commandElements.slice(1);
+console.log('start watching "' + filesToWatch + '"');
 
-console.log(command);
-console.log(commandArgs);
+watch(filesToWatch, commandString, function(cmdInfo) {
+    console.log('Changed: ' + cmdInfo.path);
 
-console.log('watching files...');
-
-watch(filesToWatch, function(event, path) {
-    console.log(event, path);
-    var cmd = spawn('ls', commandArgs);
-    cmd.stdout.pipe(process.stdout);
+    if (cmdInfo.cmdSuccess) {
+        console.log(cmdInfo.info.green);
+    } else {
+        console.log(cmdInfo.info.red);
+    }
 });
