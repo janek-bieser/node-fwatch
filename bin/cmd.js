@@ -9,7 +9,7 @@
 // Example:
 // fwatch 'src/*.scss' -c 'node-sass src/main.scss dist/main.css'
 //
-// The example above watches for file changes of some Sass fiels inside the src
+// The example above watches for file changes of some Sass files inside the src
 // directory. Everytime a file changes, `node-sass` is executed to recompile the
 // Sass files.
 //

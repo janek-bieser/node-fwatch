@@ -11,7 +11,7 @@ npm install node-fwatch
 
 ## Example
 
-The example below watches for file changes of some Sass fiels inside the src
+The example below watches for file changes of some Sass files inside the src
 directory. Everytime a file changes, `node-sass` is executed to recompile the
 Sass files.
 
