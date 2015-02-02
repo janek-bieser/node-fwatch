@@ -1,5 +1,5 @@
 {
-  "name": "filewatcher",
+  "name": "node-fwatch",
   "version": "0.1.0",
   "description": "Simple file watcher which executes a command on file change.",
   "main": "index.js",
@@ -11,6 +11,10 @@
     "dir",
     "watch"
   ],
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/janek-bieser/node-fwatch"
+  },
   "author": "Janek Bieser",
   "license": "MIT",
   "dependencies": {
