@@ -1,0 +1,20 @@
+{
+  "name": "filewatcher",
+  "version": "0.1.0",
+  "description": "Simple file watcher which executes a command on file change.",
+  "main": "index.js",
+  "bin": {
+    "fwatch": "bin/cmd.js"
+  },
+  "keywords": [
+    "file",
+    "dir",
+    "watch"
+  ],
+  "author": "Janek Bieser",
+  "license": "MIT",
+  "dependencies": {
+    "argv": "0.0.2",
+    "chokidar": "^1.0.0-rc3"
+  }
+}
